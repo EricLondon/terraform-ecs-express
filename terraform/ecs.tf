@@ -44,14 +44,6 @@ resource "aws_iam_role" "ecs_role" {
   assume_role_policy = "${data.aws_iam_policy_document.ecs_assume_role_policy.json}"
 }
 
-# AWS IAM instance profile
-# TF: https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
-# AWS: http://docs.aws.amazon.com/AmazonECS/latest/developerguide/IAM_policies.html
-resource "aws_iam_instance_profile" "ecs_instance_profile" {
-  name = "eric-instance-profile"
-  role = "${aws_iam_role.ecs_role.name}"
-}
-
 # [Data] AWS ECS task definition
 # Simply specify the family to find the latest ACTIVE revision in that family.
 # TF: https://www.terraform.io/docs/providers/aws/d/ecs_task_definition.html
@@ -126,6 +118,10 @@ echo ECS_CLUSTER=${aws_ecs_cluster.eric_express.name} >> /etc/ecs/ecs.config
 SCRIPT
 }
 
-output "ApplicationEndpoint" {
+output "PrivateIP" {
   value = "http://${aws_instance.express_ec2.private_ip}"
+}
+
+output "PublicIP" {
+  value = "http://${aws_instance.express_ec2.public_ip}"
 }
