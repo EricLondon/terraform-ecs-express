@@ -1,14 +1,3 @@
-terraform {
-  # Stores the Terraform state in S3
-  # https://www.terraform.io/docs/backends/types/s3.html
-  backend "s3" {
-    bucket  = ""
-    key     = ""
-    profile = ""
-    region  = ""
-  }
-}
-
 # AWS ECS cluster
 # TF: https://www.terraform.io/docs/providers/aws/r/ecs_cluster.html
 # AWS: http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_clusters.html
