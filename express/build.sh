@@ -3,10 +3,7 @@
 set -e
 
 cd "$(dirname "$0")"
-
-AWS_PROFILE="${AWS_PROFILE:-default}"
-AWS_REGION="${AWS_REGION:-us-east-1}"
-ECR_REPO="${ECR_REPO:-eric-test/express}"
+source ../terraform/.env
 
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --output text --query 'Account' --profile $AWS_PROFILE)
 
@@ -16,6 +13,7 @@ if [ -z $existing_repo ]; then
   aws --profile $AWS_PROFILE ecr create-repository --repository-name $ECR_REPO
 fi
 
+# build, tag, push to AWS ECR
 docker_login=$(aws ecr get-login --no-include-email --region $AWS_REGION)
 eval $docker_login
 docker build -t $ECR_REPO .
