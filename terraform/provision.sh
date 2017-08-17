@@ -22,15 +22,15 @@ if [ -z $existing_tf_bucket ]; then
 fi
 
 # init terraform & s3 backend
-rm -f *.tfstate &&
-  rm -rf ./.terraform &&
-  terraform init \
-    -force-copy \
-    -backend=true \
-    -backend-config "bucket=${TF_STATE_BUCKET}" \
-    -backend-config "key=${TF_STATE_KEY}" \
-    -backend-config "profile=${AWS_PROFILE}" \
-    -backend-config "region=${AWS_REGION}"
+rm -f *.tfstate
+rm -rf ./.terraform
+terraform init \
+  -force-copy \
+  -backend=true \
+  -backend-config "bucket=${TF_STATE_BUCKET}" \
+  -backend-config "key=${TF_STATE_KEY}" \
+  -backend-config "profile=${AWS_PROFILE}" \
+  -backend-config "region=${AWS_REGION}"
 
 # execute terraform
 terraform $TF_COMMAND \
